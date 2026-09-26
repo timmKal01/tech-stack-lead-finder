@@ -1,0 +1,37 @@
+HTTP/1.1 200 OK
+Date: Sat, 26 Sep 2026 00:33:19 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Download-Options: noopen
+x-dc: gcp-europe-west1,gcp-europe-west1,gcp-europe-west1
+X-Permitted-Cross-Domain-Policies: none
+set-cookie: localization=US; path=/; expires=Sun, 26 Sep 2027 00:33:19 GMT; SameSite=Lax
+set-cookie: cart_currency=USD; path=/; expires=Sat, 10 Oct 2026 00:33:19 GMT; SameSite=Lax
+set-cookie: _shopify_essential=:AaDbIXcyAAEAHmIgClrvVeNYG3T8QkauquMU02mpq3uOrNvGC2EIW_QW4FRPqH8HLRUVgTGQt9VdQdC51ldJgT2BzXsd9fujDskrNsQY3KXybXbSo3dLpFam23LirRB1-J6Kzbq-U4wLJiYpbtR-eb78u5l5nF-oQD0phxnaExf_oBgiw6swzlGGmzB7YgRbaCaKuGyIFellVCcJVDi1rcAlhzULTnC1sbycUb3qtpImZt2ERktyzhQuz38eZlATdB4ylAp1B9v1EV4ChZZW02YUqkFd96xNVOQ7pDGxN_rqJCs2vZF43dQtqsYFMJVVT-zjqI7gnDN3b3y47G0eM_6Y8FBLdxQ:; Max-Age=31536000; Path=/; HttpOnly; Secure; Priority=High; SameSite=Lax
+set-cookie: _shopify_analytics=:AaDbIXnfAAEA5NBq-2J01pHeOIFYv8hqYOtGB7wZeMcZYs4MloBgTdupL15Qeep8P4jl1bE7AI3UBSPhWuot9WRaaoaFND9xQGQv9buTr7TH-Zp-lA9oU9XcxSx-JZMJi4TqB2Iqndv5zla28hPGeBAP4gM:; Max-Age=31536000; Path=/; HttpOnly; Secure; Priority=High; SameSite=Lax
+set-cookie: _shopify_marketing=:AaDbIXnfAAEAu5YOd1hSnRfGtS7bhikmhU4DfyJHgHjzezeUUgRn_hqlEn-IIExDNrl5qptnLfz4SlgV9T-XawkTrIOwBPCZIgKibDDc3g_woUNuHa_OQAJDyx8d65B0IwmV8gvejFh0_YMH8Hempg8SlYg:; Max-Age=31536000; Path=/; HttpOnly; Secure; Priority=High; SameSite=Lax
+link: <https://cdn.shopify.com>; rel="preconnect", <https://cdn.shopify.com>; rel="preconnect"; crossorigin, <//colourpop.com/cdn/shop/t/1305/assets/theme-base.css?v=105718390921852490521790275493>; as="style"; rel="preload"; crossorigin, <//colourpop.com/cdn/shop/t/1305/assets/tailwind-utilities.css?v=111144492167245433291790275493>; as="style"; rel="preload"; crossorigin, <//colourpop.com/cdn/shop/t/1305/assets/theme.css?v=33226359495438451701790275493>; as="style"; rel="preload"; crossorigin, <//colourpop.com/cdn/shop/t/1305/assets/theme-base.css?v=105718390921852490521790275493>; as="style"; rel="preload", <//colourpop.com/cdn/shop/t/1305/assets/tailwind-utilities.css?v=111144492167245433291790275493>; as="style"; rel="preload", <//colourpop.com/cdn/shop/t/1305/assets/theme.css?v=33226359495438451701790275493>; as="style"; rel="preload", <https://colourpop.com/cdn/shopifycloud/portable-wallets/latest/accelerated-checkout-backwards-compat.css>; as="style"; rel="preload"; crossorigin, </.well-known/ucp>; rel="ucp"; version="2026-08-25"
+server: cloudflare
+etag: W/"page_cache:13380845:IndexController:68227d4e8acd7df2d518643a94cf480a:1faecbed8640fdf806e871c44aeab1e3"
+Nel: {"report_to":"cf-nel","success_fraction":0.01,"max_age":604800}
+shopify-complexity-score: 0
+shopify-complexity-score-v2: 688
+x-frame-options: DENY
+content-security-policy: block-all-mixed-content; frame-ancestors 'none'; upgrade-insecure-requests;
+strict-transport-security: max-age=7889238
+vary: Accept
+vary: accept-encoding
+cdn-cache-control: no-cache, no-store
+content-language: en-US
+accept-ch: Sec-CH-Viewport-Width
+powered-by: Shopify
+server-timing: processing;dur=698;desc="gc:64", db;dur=77, db_async;dur=272.996, render;dur=453, asn;desc="33771", edge;desc="NBO", country;desc="KE", theme;desc="131494182994", pageType;desc="index", servedBy;desc="kc6z", requestID;desc="9ba88461-6547-4631-94dc-2e7514d76178-1790382798", _y;desc="9c3733ce-7d8c-4ab1-b3c3-721ebccdace4", _s;desc="b97abd64-0582-4749-aeb5-b3bad58b4bc5", _cmp;desc="3.AMPS_KE30_f_f_lXyKzLRISTS8qYcUw-DSSg", _cta;desc="1", _ye;desc="1821940399", _se;desc="1790384599", compressionLevel;desc="5", compressionTime;dur=21.078
+x-request-id: 9ba88461-6547-4631-94dc-2e7514d76178-1790382798
+cf-cache-status: DYNAMIC
+Alt-Svc: h3=":443"; ma=86400
+X-XSS-Protection: 1; mode=block
+Report-To: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=26U6MAKfr0xNSXvdS8kkhxccURlo9gn997%2FPrbjBav9VAEJMpMvuRkTwtaOEBhaxIj3sPIcdjE5Xz7xvDF4SSS4FLcL3fMiJWKU2ohR3lrhTEIMny7JrwdwCd5clzks%3D"}]}
+X-Content-Type-Options: nosniff
+CF-RAY: a40e2d2a99c3b196-NBO
+

@@ -1,0 +1,53 @@
+{
+    "title": "Tech Stack Lead Finder Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "domains": {
+            "title": "Domains",
+            "type": "array",
+            "editor": "stringList",
+            "description": "One per line: example.com, www.example.com or a full URL (only the domain is used). Each homepage is fetched once.",
+            "prefill": ["allbirds.com", "colourpop.com", "kyliecosmetics.com", "brooklinen.com", "skullcandy.com", "wordpress.org", "woocommerce.com", "basecamp.com", "ghost.org", "prestashop.com"]
+        },
+        "requireAll": {
+            "title": "Must use all of",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Keep only sites using every one of these, e.g. \"Shopify\", \"Klaviyo\". Names are forgiving: \"woocommerce\", \"google analytics\", \"GA4\" all work."
+        },
+        "requireAny": {
+            "title": "Must use at least one of",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Keep only sites using at least one of these, e.g. \"Shopify\", \"WooCommerce\", \"BigCommerce\".",
+            "prefill": ["Shopify"]
+        },
+        "exclude": {
+            "title": "Must not use",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Drop sites using any of these. Example: require Shopify and exclude Klaviyo to find stores without Klaviyo."
+        },
+        "enrich": {
+            "title": "Add contact details",
+            "type": "boolean",
+            "description": "For matching sites, read the contact and about pages (at most 2 extra pages) for published emails, phone numbers and social profiles.",
+            "default": true
+        },
+        "includeNonMatches": {
+            "title": "Include non-matching sites",
+            "type": "boolean",
+            "description": "Also output sites that didn't match, or couldn't be loaded, with the reason. These rows are free.",
+            "default": false
+        },
+        "maxItems": {
+            "title": "Max matching sites",
+            "type": "integer",
+            "editor": "number",
+            "minimum": 1,
+            "default": 1000,
+            "description": "Stop once this many matching sites have been found."
+        }
+    }
+}

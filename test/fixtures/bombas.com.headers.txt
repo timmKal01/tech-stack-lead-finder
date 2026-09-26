@@ -1,0 +1,10 @@
+HTTP/1.1 429 Too Many Requests
+Cache-Control: private, no-store, max-age=0
+Content-Type: text/html; charset=utf-8
+Server: Vercel
+X-Vercel-Challenge-Token: 2.1790382804.60.M2M5NDY5OGZjMDY2MWMyMDYxNzU3NmI4ZTU5ZDc4ZDc7ZTg0OTRjYTE7ZjNmNmU2OTZlMzYwYmIxYThlYzE3NGNhN2QwMGM1MTgzZGE4YmI4ODszOwLlkH/URMaiZHWce63gXGir8sNDegjMSZOYB/SzipYeGwJQV5sgWxAg7TxthCE=.e8ee06ef7f2357b85fe125f30ac1d02b
+X-Vercel-Id: cpt1::1790382804-Gfg4mZQwyt0p4XMYeppDDi49tLV4zpcN
+X-Vercel-Mitigated: challenge
+Date: Sat, 26 Sep 2026 00:33:24 GMT
+Transfer-Encoding: chunked
+

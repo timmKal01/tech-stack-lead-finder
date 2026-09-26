@@ -1,0 +1,17 @@
+{
+    "name": "tech-stack-lead-finder",
+    "version": "0.1.0",
+    "type": "module",
+    "description": "Bulk-check domains for 124 technologies (Shopify, Klaviyo, HubSpot, Intercom, Stripe...), keep the sites matching a target stack, and add the business emails, phones and social profiles they publish.",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "dependencies": {
+        "apify": "^3.2.6",
+        "cheerio": "^1.0.0"
+    },
+    "scripts": {
+        "start": "node src/main.js",
+        "test": "node --test"
+    }
+}
