@@ -1,0 +1,81 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "domain",
+                    "matched",
+                    "status",
+                    "technologies",
+                    "emails",
+                    "phones",
+                    "socials.instagram",
+                    "socials.facebook",
+                    "socials.x",
+                    "socials.linkedin",
+                    "title",
+                    "httpStatus"
+                ],
+                "flatten": [
+                    "socials"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "domain": {
+                        "label": "Domain",
+                        "format": "text"
+                    },
+                    "matched": {
+                        "label": "Matched",
+                        "format": "boolean"
+                    },
+                    "status": {
+                        "label": "Status",
+                        "format": "text"
+                    },
+                    "technologies": {
+                        "label": "Technologies",
+                        "format": "array"
+                    },
+                    "emails": {
+                        "label": "Emails",
+                        "format": "array"
+                    },
+                    "phones": {
+                        "label": "Phones",
+                        "format": "array"
+                    },
+                    "socials.instagram": {
+                        "label": "Socials: instagram",
+                        "format": "link"
+                    },
+                    "socials.facebook": {
+                        "label": "Socials: facebook",
+                        "format": "link"
+                    },
+                    "socials.x": {
+                        "label": "Socials: x",
+                        "format": "link"
+                    },
+                    "socials.linkedin": {
+                        "label": "Socials: linkedin",
+                        "format": "link"
+                    },
+                    "title": {
+                        "label": "Title",
+                        "format": "text"
+                    },
+                    "httpStatus": {
+                        "label": "Http status",
+                        "format": "number"
+                    }
+                }
+            }
+        }
+    }
+}
