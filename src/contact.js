@@ -7,6 +7,7 @@
 const AT = String.raw`\s*(?:\[\s*at\s*\]|\(\s*at\s*\)|\{\s*at\s*\}|<\s*at\s*>|\s+at\s+|@)\s*`;
 const DOT = String.raw`\s*(?:\[\s*dot\s*\]|\(\s*dot\s*\)|\{\s*dot\s*\}|<\s*dot\s*>|\s+dot\s+|\.)\s*`;
 const EMAIL_RE = new RegExp(String.raw`(?<![a-z0-9._%+-])([a-z0-9][a-z0-9._%+-]{0,63})${AT}([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:${DOT}[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*)${DOT}([a-z]{2,24})(?![a-z0-9])`, 'gi');
+const STRICT_EMAIL_RE = /(?<![a-z0-9._%+-])([a-z0-9][a-z0-9._%+-]{0,63})@((?:[a-z0-9-]+\.)+[a-z]{2,24})(?![a-z0-9])/gi;
 const VALID_EMAIL_RE = /^[a-z0-9._%+-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,24}$/;
 const IMAGE_EXT_RE = /\.(png|jpe?g|gif|svg|webp|avif|css|js)$/i;
 // Template addresses and vendors' own addresses that appear in embedded widgets, not the site's contact.
@@ -29,9 +30,21 @@ export function extractEmails(text, mailtoHrefs = []) {
     for (const h of mailtoHrefs) {
         try { add(decodeURIComponent(h.replace(/^mailto:/i, ''))); } catch { add(h.replace(/^mailto:/i, '')); }
     }
+    // Plain addresses: no spaces allowed, so "pixels@agency.example. Dr. Jane" stops at ".example".
+    for (const m of String(text ?? '').matchAll(STRICT_EMAIL_RE)) {
+        const [, local, domain] = m;
+        const labels = domain.split('.');
+        // "hello@brooklinen.com.The team..." : a capitalised word glued on after the real TLD.
+        if (labels.length > 2 && /^[A-Z]/.test(labels.at(-1)) && labels.slice(0, -1).every((l) => l === l.toLowerCase())) labels.pop();
+        add(`${local}@${labels.join('.')}`);
+    }
     for (const m of String(text ?? '').matchAll(EMAIL_RE)) {
         const [whole, local, domain, tld] = m;
-        if (!whole.includes('@')) {
+        if (whole.includes('@')) {
+            // Plain addresses were taken by the strict pass. Left: a spaced "info @ shop.com", kept
+            // only when its dots are tight, so no following sentence gets glued on.
+            if (!/\s@|@\s/.test(whole) || /\s\.|\.\s/.test(whole)) continue;
+        } else {
             // Spelled-out forms: " at " needs " dot " too (or brackets), and no prose words as the mailbox.
             const bracketed = /[[({<]\s*at\s*[\])}>]/i.test(whole);
             if (!bracketed && !/\bdot\b|[[({<]\s*dot/i.test(whole)) continue;
@@ -39,7 +52,6 @@ export function extractEmails(text, mailtoHrefs = []) {
         }
         let labels = domain.split(new RegExp(DOT, 'i'));
         let top = tld;
-        // "hello@brooklinen.com.The team..." : a capitalised word glued on after the real TLD.
         if (/^[A-Z][a-z]/.test(tld) && labels.length > 1 && /^[a-z]{2,24}$/.test(labels.at(-1)) && domain === domain.toLowerCase()) {
             top = labels.at(-1);
             labels = labels.slice(0, -1);
