@@ -109,11 +109,11 @@ await Promise.all(Array.from({ length: Math.min(CONCURRENCY, domainList.length) 
         counts[row.status] = (counts[row.status] ?? 0) + 1;
         if (row.matched && matchedCount < maxItems) {
             matchedCount++;
-            await Actor.pushData(row);
+            await Actor.pushData({ rowType: 'site', ...row });
             await Actor.charge({ eventName: MATCH_EVENT });
             log.info(`${domain}: match (${row.technologies.length} technologies, ${row.emails.length} email(s), ${row.phones.length} phone(s))`);
         } else {
-            if (includeNonMatches) await Actor.pushData({ ...row, matched: false });
+            if (includeNonMatches) await Actor.pushData({ rowType: row.status === 'ok' ? 'site' : 'error', ...row, matched: false });
             log.info(`${domain}: ${row.status === 'ok' ? 'no match' : row.status}`);
         }
     }

@@ -76,6 +76,7 @@ A real row from the default run (2026-09-26):
 
 ```json
 {
+  "rowType": "site",
   "domain": "brooklinen.com",
   "matched": true,
   "status": "ok",
@@ -107,6 +108,8 @@ A real row from the default run (2026-09-26):
   "scrapedAt": "2026-09-26T00:35:08.040Z"
 }
 ```
+
+`rowType` is `"site"`. With `includeNonMatches`, a site that couldn't be checked comes back as `"error"`.
 
 ### Confidence
 
