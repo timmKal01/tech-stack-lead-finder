@@ -1,8 +1,8 @@
 {
     "actorSpecification": 1,
     "name": "tech-stack-lead-finder",
-    "title": "Tech Stack Lead Finder: Shopify, Klaviyo & 120+ Technologies",
-    "description": "Find websites by the technology they use and turn them into leads. Checks each domain for 125 technologies (Shopify, WooCommerce, Klaviyo, HubSpot, Intercom, Stripe...), keeps sites matching your stack filters, and adds the emails, phones and social profiles they publish.",
+    "title": "Tech Stack Detector & Lead Finder: Wappalyzer Alternative",
+    "description": "Detect any website's tech stack like Wappalyzer, or find sites by the tools they use. Checks each domain for 124 technologies (Shopify, WordPress, Klaviyo, HubSpot, Stripe...), groups them by category, and adds the emails, phones and social profiles sites publish. Filter by stack for lead lists.",
     "version": "0.1",
     "meta": {
         "templateId": "custom-no-proxy"

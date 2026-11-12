@@ -1,6 +1,7 @@
 // Business contact details a site publishes: emails, phone numbers, social profiles, plus
 // title / description / language. Nothing is guessed or generated: every email and phone
 // number returned was written on the page (as text or a mailto:/tel: link).
+import { getDomain } from 'tldts';
 
 // ---------- emails ----------
 
@@ -59,6 +60,42 @@ export function extractEmails(text, mailtoHrefs = []) {
         add(`${local}@${labels.join('.')}.${top}`);
     }
     return [...out.filter(isRoleAddress), ...out.filter((e) => !isRoleAddress(e))];
+}
+
+// ---------- business-only filter (the same rule as website-gap-finder, 2026-11-13) ----------
+
+// Generic mailboxes, in the languages businesses commonly use. A short suffix is allowed ("info.uk", "sales-team").
+const BUSINESS_ROLE_RE = /^(info|information|hello|hi|hey|contact|contacts|contacto|contato|contatto|kontakt|bonjour|hola|ciao|hallo|office|oficina|ufficio|buero|admin|administration|reception|recepcion|frontdesk|front\.desk|bookings?|reservations?|reservas|appointments?|enquiries|enquiry|inquiries|inquiry|sales|ventas|vendas|support|help|helpdesk|team|mail|email|studio|salon|clinic|practice|care|customercare|customerservice|customersupport|service|services|orders|order|shop|store|general|accounts|billing|hr|jobs|careers|marketing|press|pr|media|news|newsletter|partners|partnerships|partner|wholesale|trade|business|influencers?|collabs?|collaborations?|affiliates?|creators?|community|events|returns|shipping|feedback|privacy|legal|dpo|ecommerce|online|web|webmaster|hiring|talent|recruiting|investors?|ir|founders?)([._-]?[a-z0-9]{0,20})?$/;
+const FREE_MAIL_RE = /^(gmail|googlemail|yahoo|ymail|rocketmail|hotmail|outlook|live|msn|icloud|me|mac|aol|gmx|web|mail|yandex|proton|protonmail|zoho|orange|libero|free|laposte|qq|163|126|btinternet|sky|virginmedia|talktalk|comcast|att|verizon)\.[a-z.]+$/;
+
+const fold = (s) => String(s ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+
+/**
+ * The business's own addresses among `emails`, best first: generic mailboxes (info@, sales@, press@...) and
+ * addresses that carry the site's name (brooklinen@gmail.com, sales@brooklinenbusiness.com). Anything else
+ * may be one person's own mailbox (jane.smith@...), so it's left out, whatever page it was published on.
+ */
+export function businessEmails(emails, siteUrl) {
+    let siteDomain = null;
+    try { siteDomain = siteUrl ? getDomain(new URL(siteUrl).hostname) : null; } catch { /* no site domain */ }
+    const label = siteDomain ? fold(siteDomain.split('.')[0]) : '';
+    const ranked = [];
+    for (const email of emails) {
+        const [local, domain] = email.split('@');
+        const onSite = siteDomain && getDomain(domain) === siteDomain;
+        const freeMail = FREE_MAIL_RE.test(domain);
+        const role = BUSINESS_ROLE_RE.test(local);
+        const carriesName = label.length >= 4 && fold(local).replace(/[^a-z0-9]/g, '').includes(label);
+        const domainCarriesName = label.length >= 4 && fold(getDomain(domain) ?? domain).replace(/[^a-z0-9.]/g, '').split('.')[0].includes(label);
+        if (onSite && role) ranked.push([0, email]);
+        else if (onSite && carriesName) ranked.push([1, email]);
+        else if (domainCarriesName && role) ranked.push([2, email]); // sales@brooklinenbusiness.com
+        else if (freeMail && carriesName) ranked.push([3, email]);
+        else if (freeMail && role) ranked.push([4, email]);
+        else if (carriesName) ranked.push([5, email]);
+    }
+    ranked.sort((a, b) => a[0] - b[0]);
+    return ranked.map(([, email]) => email);
 }
 
 // ---------- phones ----------

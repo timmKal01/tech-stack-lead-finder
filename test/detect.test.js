@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import * as cheerio from 'cheerio';
-import { applyFilters, buildContext, cookieNames, detect, loadSignatures, resolveNames } from '../src/detect.js';
+import { applyFilters, buildContext, cookieNames, detect, groupByCategory, loadSignatures, resolveNames, serverFacts } from '../src/detect.js';
 import { isChallenge } from '../src/fetch.js';
 
 const signatures = loadSignatures();
@@ -124,4 +124,25 @@ test('filter names are forgiving and unknown names are reported', () => {
 test('cookie names from Set-Cookie', () => {
     assert.deepEqual(cookieNames(['_shopify_y=abc; Path=/', 'cart=1; Expires=Wed, 21 Oct 2026 07:28:00 GMT']), ['_shopify_y', 'cart']);
     assert.deepEqual(cookieNames('a=1; Path=/, b=2; Expires=Wed, 21 Oct 2026 07:28:00 GMT'), ['a', 'b']);
+});
+
+test('stack by category: every category present, technologies under their own key', () => {
+    const p = page('woocommerce.com');
+    const found = detect(signatures, buildContext({ headers: p.headers, cookies: cookieNames(p.setCookies), html: p.html, $: cheerio.load(p.html) }));
+    const stack = groupByCategory(found);
+    assert.ok(stack.ecommerce.includes('WooCommerce'));
+    assert.ok(stack.cms.includes('WordPress'));
+    const raw = JSON.parse(readFileSync(new URL('../src/signatures.json', import.meta.url)));
+    const keys = Object.keys(groupByCategory([]));
+    // One key per signatures.json category, all empty when nothing was found.
+    assert.equal(keys.length, new Set(raw.signatures.map((s) => s.category)).size);
+    assert.ok(Object.values(groupByCategory([])).every((v) => Array.isArray(v) && v.length === 0));
+    assert.deepEqual(groupByCategory([{ name: 'Cloudflare', category: 'cdn-hosting' }, { name: 'Next.js', category: 'framework' }]).cdnHosting, ['Cloudflare']);
+    assert.deepEqual(groupByCategory([{ name: 'Next.js', category: 'framework' }]).frameworks, ['Next.js']);
+});
+
+test('server facts: server and x-powered-by headers, generator tag, as the site states them', () => {
+    const $ = cheerio.load('<html><head><meta name="Generator" content="WordPress 6.6"></head></html>');
+    assert.deepEqual(serverFacts({ Server: 'nginx', 'X-Powered-By': 'PHP/8.2' }, $), { server: 'nginx', poweredBy: 'PHP/8.2', generator: 'WordPress 6.6' });
+    assert.deepEqual(serverFacts({}), { server: null, poweredBy: null, generator: null });
 });

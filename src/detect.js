@@ -101,6 +101,37 @@ export function detect(signatures, ctx) {
     return found;
 }
 
+// ---------- the stack by category ----------
+
+// signatures.json category -> the key used in each row's `stack` object.
+const STACK_KEYS = {
+    cms: 'cms', ecommerce: 'ecommerce', framework: 'frameworks', analytics: 'analytics', 'tag-manager': 'tagManagers',
+    'marketing-automation': 'marketingAutomation', 'email-marketing': 'emailMarketing', 'sms-marketing': 'smsMarketing',
+    'live-chat': 'liveChat', payments: 'payments', reviews: 'reviews', 'ab-testing': 'abTesting', 'cdn-hosting': 'cdnHosting',
+    search: 'search', consent: 'consent', subscriptions: 'subscriptions', loyalty: 'loyalty',
+};
+const camel = (s) => s.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+
+/**
+ * The detected technologies grouped by category: {cms: ['WordPress'], ecommerce: [], ...}. Every category is
+ * always present (empty when nothing was found), so every row has the same columns.
+ */
+export function groupByCategory(technologies = []) {
+    const stack = Object.fromEntries(Object.values(STACK_KEYS).map((k) => [k, []]));
+    for (const t of technologies) {
+        const key = STACK_KEYS[t.category] ?? camel(t.category);
+        (stack[key] ??= []).push(t.name);
+    }
+    return stack;
+}
+
+/** The server software a site names in its headers and generator tag, as the site states it. */
+export function serverFacts(headers = {}, $ = null) {
+    const h = Object.fromEntries(Object.entries(headers).map(([k, v]) => [k.toLowerCase(), String(v)]));
+    const generator = $ ? ($('meta[name="generator" i]').attr('content') ?? '').trim() : '';
+    return { server: h.server ?? null, poweredBy: h['x-powered-by'] ?? null, generator: generator || null };
+}
+
 // ---------- filters ----------
 
 const norm = (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]/g, '');

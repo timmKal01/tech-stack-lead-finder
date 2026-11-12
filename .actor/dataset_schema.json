@@ -9,6 +9,7 @@
                     "domain",
                     "matched",
                     "status",
+                    "error",
                     "technologies",
                     "emails",
                     "phones",
@@ -73,6 +74,140 @@
                     "httpStatus": {
                         "label": "Http status",
                         "format": "number"
+                    },
+                    "error": {
+                        "label": "Why not checked (free)",
+                        "format": "text"
+                    }
+                }
+            }
+        },
+        "stack": {
+            "title": "Tech stack",
+            "transformation": {
+                "fields": [
+                    "domain",
+                    "status",
+                    "error",
+                    "stack.cms",
+                    "stack.ecommerce",
+                    "stack.frameworks",
+                    "stack.analytics",
+                    "stack.tagManagers",
+                    "stack.marketingAutomation",
+                    "stack.emailMarketing",
+                    "stack.smsMarketing",
+                    "stack.liveChat",
+                    "stack.payments",
+                    "stack.reviews",
+                    "stack.abTesting",
+                    "stack.cdnHosting",
+                    "stack.search",
+                    "stack.consent",
+                    "stack.subscriptions",
+                    "stack.loyalty",
+                    "server",
+                    "poweredBy",
+                    "generator"
+                ],
+                "flatten": [
+                    "stack"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "domain": {
+                        "label": "Domain",
+                        "format": "text"
+                    },
+                    "status": {
+                        "label": "Status",
+                        "format": "text"
+                    },
+                    "error": {
+                        "label": "Why not checked (free)",
+                        "format": "text"
+                    },
+                    "stack.cms": {
+                        "label": "CMS",
+                        "format": "array"
+                    },
+                    "stack.ecommerce": {
+                        "label": "Ecommerce",
+                        "format": "array"
+                    },
+                    "stack.frameworks": {
+                        "label": "Frameworks",
+                        "format": "array"
+                    },
+                    "stack.analytics": {
+                        "label": "Analytics",
+                        "format": "array"
+                    },
+                    "stack.tagManagers": {
+                        "label": "Tag managers",
+                        "format": "array"
+                    },
+                    "stack.marketingAutomation": {
+                        "label": "Marketing automation",
+                        "format": "array"
+                    },
+                    "stack.emailMarketing": {
+                        "label": "Email marketing",
+                        "format": "array"
+                    },
+                    "stack.smsMarketing": {
+                        "label": "SMS marketing",
+                        "format": "array"
+                    },
+                    "stack.liveChat": {
+                        "label": "Live chat",
+                        "format": "array"
+                    },
+                    "stack.payments": {
+                        "label": "Payments",
+                        "format": "array"
+                    },
+                    "stack.reviews": {
+                        "label": "Reviews",
+                        "format": "array"
+                    },
+                    "stack.abTesting": {
+                        "label": "A/B testing",
+                        "format": "array"
+                    },
+                    "stack.cdnHosting": {
+                        "label": "CDN and hosting",
+                        "format": "array"
+                    },
+                    "stack.search": {
+                        "label": "Search",
+                        "format": "array"
+                    },
+                    "stack.consent": {
+                        "label": "Consent",
+                        "format": "array"
+                    },
+                    "stack.subscriptions": {
+                        "label": "Subscriptions",
+                        "format": "array"
+                    },
+                    "stack.loyalty": {
+                        "label": "Loyalty",
+                        "format": "array"
+                    },
+                    "server": {
+                        "label": "Server header",
+                        "format": "text"
+                    },
+                    "poweredBy": {
+                        "label": "X-Powered-By",
+                        "format": "text"
+                    },
+                    "generator": {
+                        "label": "Generator tag",
+                        "format": "text"
                     }
                 }
             }

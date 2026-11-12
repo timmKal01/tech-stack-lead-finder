@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import * as cheerio from 'cheerio';
-import { enrichmentTargets, extractEmails, extractPhones, extractSocials, hrefs, pageFacts, visibleText } from '../src/contact.js';
+import { businessEmails, enrichmentTargets, extractEmails, extractPhones, extractSocials, hrefs, pageFacts, visibleText } from '../src/contact.js';
 import { normalizeDomain } from '../src/domains.js';
 import { isAllowed, parseRobots } from '../src/robots.js';
 
@@ -97,4 +97,15 @@ test('robots.txt is respected', () => {
     const rules = parseRobots('User-agent: *\nDisallow: /pages/contact\nAllow: /\n');
     assert.ok(isAllowed(rules, '/'));
     assert.ok(!isAllowed(rules, '/pages/contact'));
+});
+
+test('business emails only: generic mailboxes and name-carrying addresses, never a staff member\'s own', () => {
+    const site = 'https://www.brooklinen.com/pages/contact';
+    // From the real 2026-09-26 run, plus two made-up staff addresses.
+    const found = ['jane.smith@brooklinen.com', 'hello@brooklinen.com', 'press@brooklinen.com', 'sales@brooklinenbusiness.com', 'influencer@brooklinen.com', 'mike@brooklinen.com'];
+    assert.deepEqual(businessEmails(found, site), ['hello@brooklinen.com', 'press@brooklinen.com', 'influencer@brooklinen.com', 'sales@brooklinenbusiness.com']);
+    assert.deepEqual(businessEmails(['brooklinen@gmail.com', 'john1985@gmail.com'], site), ['brooklinen@gmail.com']);
+    assert.deepEqual(businessEmails(['support@zendesk.com'], site), []); // a third party's address
+    assert.deepEqual(businessEmails(['info@shop.co.uk'], 'https://shop.co.uk/'), ['info@shop.co.uk']);
+    assert.deepEqual(businessEmails(['sales.team@acme.com', 'maria.lopez@acme.com'], 'https://acme.com/'), ['sales.team@acme.com']);
 });

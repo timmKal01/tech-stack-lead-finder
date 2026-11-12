@@ -7,21 +7,34 @@
             "title": "Domains",
             "type": "array",
             "editor": "stringList",
-            "description": "One per line: example.com, www.example.com or a full URL (only the domain is used). Each homepage is fetched once.",
-            "prefill": ["allbirds.com", "colourpop.com", "kyliecosmetics.com", "brooklinen.com", "skullcandy.com", "wordpress.org", "woocommerce.com", "basecamp.com", "ghost.org", "prestashop.com"]
+            "description": "One per line: example.com, www.example.com or a full URL (only the domain is used). Each homepage is fetched once. Leave the three filters below empty to get every site's full tech stack, one row per site, like Wappalyzer.",
+            "prefill": [
+                "allbirds.com",
+                "colourpop.com",
+                "kyliecosmetics.com",
+                "brooklinen.com",
+                "skullcandy.com",
+                "wordpress.org",
+                "woocommerce.com",
+                "basecamp.com",
+                "ghost.org",
+                "prestashop.com"
+            ]
         },
         "requireAll": {
             "title": "Must use all of",
             "type": "array",
             "editor": "stringList",
-            "description": "Keep only sites using every one of these, e.g. \"Shopify\", \"Klaviyo\". Names are forgiving: \"woocommerce\", \"google analytics\", \"GA4\" all work."
+            "description": "Keep only sites using every one of these, e.g. \"Shopify\", \"Klaviyo\". Names are forgiving: \"woocommerce\", \"google analytics\", \"GA4\" all work. Leave all three filters empty to keep every site."
         },
         "requireAny": {
             "title": "Must use at least one of",
             "type": "array",
             "editor": "stringList",
-            "description": "Keep only sites using at least one of these, e.g. \"Shopify\", \"WooCommerce\", \"BigCommerce\".",
-            "prefill": ["Shopify"]
+            "description": "Keep only sites using at least one of these, e.g. \"Shopify\", \"WooCommerce\", \"BigCommerce\". Clear it (and leave the other two filters empty) to get the tech stack of every site you list.",
+            "prefill": [
+                "Shopify"
+            ]
         },
         "exclude": {
             "title": "Must not use",
@@ -32,13 +45,13 @@
         "enrich": {
             "title": "Add contact details",
             "type": "boolean",
-            "description": "For matching sites, read the contact and about pages (at most 2 extra pages) for published emails, phone numbers and social profiles.",
+            "description": "For matching sites, read the contact and about pages (at most 2 extra pages) for the business emails, phone numbers and social profiles they publish. Addresses that look like a staff member's own are left out.",
             "default": true
         },
         "includeNonMatches": {
             "title": "Include non-matching sites",
             "type": "boolean",
-            "description": "Also output sites that didn't match, or couldn't be loaded, with the reason. These rows are free.",
+            "description": "Also output sites that didn't match, or couldn't be loaded, with the reason. These rows are free. With no filters this is automatic: every site gets a row.",
             "default": false
         },
         "maxItems": {
